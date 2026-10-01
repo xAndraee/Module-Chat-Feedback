@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "autismclient.addon.moduletogglefeedback.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "ModuleToggleFeedbackMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "autism-module-toggle-feedback",
+  "version": "1.0.0",
+  "name": "AUTISM Module Toggle Feedback",
+  "description": "Adds a setting to control module enable and disable chat feedback.",
+  "authors": [
+    "AUTISM Client contributors"
+  ],
+  "custom": {
+    "autism:color": "255,190,80",
+    "modmenu": {
+      "parent": {
+        "id": "autism"
+      }
+    }
+  },
+  "environment": "client",
+  "entrypoints": {
+    "client": [],
+    "autism": [
+      "autismclient.addon.moduletogglefeedback.ModuleToggleFeedbackAddon"
+    ]
+  },
+  "mixins": [
+    "autism-module-toggle-feedback.mixins.json"
+  ],
+  "depends": {
+    "java": ">=25",
+    "minecraft": "26.2",
+    "fabricloader": ">=0.19.3",
+    "fabric-api": ">=0.152.2+26.2",
+    "autism": ">=5.0-26.2"
+  }
+}
