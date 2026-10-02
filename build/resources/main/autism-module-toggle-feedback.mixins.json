@@ -3,6 +3,7 @@
   "package": "autismclient.addon.moduletogglefeedback.mixin",
   "compatibilityLevel": "JAVA_25",
   "client": [
+    "ModuleToggleFeedbackModuleMixin",
     "ModuleToggleFeedbackMixin"
   ],
   "injectors": {

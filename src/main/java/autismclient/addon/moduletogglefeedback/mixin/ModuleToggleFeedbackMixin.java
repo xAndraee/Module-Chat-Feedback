@@ -16,6 +16,6 @@ public abstract class ModuleToggleFeedbackMixin {
             target = "Lautismclient/util/AutismClientMessaging;sendPrefixed(Ljava/lang/String;)V"),
         cancellable = true)
     private void moduleToggleFeedback$suppress(boolean enabled, CallbackInfo ci) {
-        if (ModuleToggleFeedbackAddon.isFeedbackEnabled()) ci.cancel();
+        if (ModuleToggleFeedbackAddon.shouldSuppress((Module) (Object) this)) ci.cancel();
     }
 }

@@ -2,13 +2,15 @@ package autismclient.addon.moduletogglefeedback;
 
 import autismclient.api.ApiVersion;
 import autismclient.api.AutismAddon;
-import autismclient.api.AutismAddons;
+import autismclient.modules.Module;
+import autismclient.modules.ModuleRegistry;
 import autismclient.util.AutismConfig;
 
 public final class ModuleToggleFeedbackAddon extends AutismAddon {
     public static final String ID = "autism-module-toggle-feedback";
+    public static final String SETTING_ID = "module-toggle-feedback";
 
-    private static ToggleFeedbackSettings settings;
+    private static final String LEGACY_SETTINGS_ID = ID + ":settings";
 
     @Override
     public int apiVersion() {
@@ -17,18 +19,34 @@ public final class ModuleToggleFeedbackAddon extends AutismAddon {
 
     @Override
     public void onInitialize() {
-        settings = new ToggleFeedbackSettings();
-        AutismConfig.ModuleState previousState = AutismConfig.getGlobal().modules.get(settings.id());
-        AutismAddons.modules().register(settings);
-        if (previousState == null) {
-            settings.setEnabled(true);
-        } else if (previousState.settings.containsKey("module-toggle-feedback")) {
-            settings.setEnabled(Boolean.parseBoolean(previousState.settings.get("module-toggle-feedback")));
+        migrateLegacyValues();
+    }
+
+    public static boolean shouldSuppress(Module module) {
+        if (module == null) return true;
+        return Boolean.parseBoolean(module.value(SETTING_ID));
+    }
+
+    private static void migrateLegacyValues() {
+        AutismConfig config = AutismConfig.getGlobal();
+        AutismConfig.ModuleState legacyGlobal = config.modules.get(LEGACY_SETTINGS_ID);
+        for (Module module : ModuleRegistry.all()) {
+            if (module == null || module.id() == null || module.id().isBlank()) continue;
+            if (module.id().startsWith(ID + ":")) continue;
+            if (module.settingValue(SETTING_ID) != null) continue;
+
+            String legacyValue = legacyGlobal == null ? null : legacyGlobal.settings.get(module.id());
+            if (legacyValue == null) {
+                AutismConfig.ModuleState legacyProxy = config.modules.get(ID + ":" + stableId(module.id()));
+                legacyValue = legacyProxy == null ? null : legacyProxy.settings.get(SETTING_ID);
+            }
+            if (legacyValue != null) module.setValue(SETTING_ID, legacyValue);
         }
     }
 
-    public static boolean isFeedbackEnabled() {
-        return settings == null || settings.isFeedbackEnabled();
+    private static String stableId(String moduleId) {
+        return java.util.Base64.getUrlEncoder().withoutPadding()
+            .encodeToString(moduleId.getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
 
     @Override

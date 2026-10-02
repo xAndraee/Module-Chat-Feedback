@@ -1,7 +1,11 @@
 # AUTISM Module Toggle Feedback
 
-Small AUTISM Client addon that adds a `Module Toggle Feedback` boolean setting.
-It defaults to ON. When OFF, only the chat message emitted by `Module.setEnabled` is suppressed; module state changes, lifecycle callbacks, persistence, commands, errors, and other client messages remain unchanged.
+Small AUTISM Client addon that adds an independent `Module Toggle Feedback`
+boolean setting inside every registered module's existing settings screen.
+Settings default to ON:
+ON suppresses that module's toggle message, while OFF preserves its normal feedback.
+Module state changes, lifecycle callbacks, persistence, commands, errors, and other
+client messages remain unchanged.
 
 ## Build
 

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "autism-module-toggle-feedback",
-  "version": "1.0.0",
+  "version": "1.1",
   "name": "AUTISM Module Toggle Feedback",
   "description": "Adds a setting to control module enable and disable chat feedback.",
   "authors": [
-    "AUTISM Client contributors"
+    "xAndraee"
   ],
   "custom": {
     "autism:color": "255,190,80",
